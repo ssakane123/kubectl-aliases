@@ -58,12 +58,14 @@ def main():
     res_types = [r[0] for r in res]
 
     args = [
-        ('oyaml', '-o=yaml', ['g'], ['owide', 'ojson', 'sl', 'c']),
+        ('oyaml', '-o=yaml', ['g', 'c'], ['owide', 'ojson', 'sl']),
         ('owide', '-o=wide', ['g'], ['oyaml', 'ojson']),
         ('ojson', '-o=json', ['g'], ['owide', 'oyaml', 'sl']),
         ('all', '--all-namespaces', ['g', 'd'], ['del', 'f', 'no']),
         ('sl', '--show-labels', ['g'], ['oyaml', 'ojson'], None),
         ('w', '--watch', ['g'], ['oyaml', 'ojson', 'owide']),
+        ('drc', '--dry-run=client', ['a', 'c', 'run'], ['owide', 'all', 'sl', 'w', 'drs']),
+        ('drs', '--dry-run=server', ['a', 'c', 'run'], ['owide', 'all', 'sl', 'w', 'drc']),
     ]
 
     # these accept a value, so they need to be at the end and
