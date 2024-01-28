@@ -40,27 +40,28 @@ def main():
         ('g', 'get', None, None),
         ('d', 'describe', None, None),
         ('del', 'delete', None, None),
+        ('c', 'create', None, None),
         ('run', 'run', None, None),
     ]
 
     res = [
         ('po', 'pods', ['g', 'd', 'del'], None),
-        ('dep', 'deployment', ['g', 'd', 'del'], None),
+        ('dep', 'deployment', ['g', 'd', 'del', 'c'], None),
         ('ds', 'daemonset', ['g', 'd', 'del'], None),
         ('svc', 'service', ['g', 'd', 'del'], None),
         ('ing', 'ingress', ['g', 'd', 'del'], None),
-        ('cm', 'configmap', ['g', 'd', 'del'], None),
-        ('sec', 'secret', ['g', 'd', 'del'], None),
-        ('no', 'nodes', ['g', 'd'], ['sys']),
-        ('ns', 'namespaces', ['g', 'd', 'del'], ['sys']),
+        ('cm', 'configmap', ['g', 'd', 'del', 'c'], None),
+        ('sec', 'secret', ['g', 'd', 'del', 'c'], None),
+        ('no', 'nodes', ['g', 'd'], None),
+        ('ns', 'namespaces', ['g', 'd', 'del', 'c'], None),
     ]
     res_types = [r[0] for r in res]
 
     args = [
-        ('oyaml', '-o=yaml', ['g'], ['owide', 'ojson', 'sl']),
+        ('oyaml', '-o=yaml', ['g'], ['owide', 'ojson', 'sl', 'c']),
         ('owide', '-o=wide', ['g'], ['oyaml', 'ojson']),
         ('ojson', '-o=json', ['g'], ['owide', 'oyaml', 'sl']),
-        ('all', '--all-namespaces', ['g', 'd'], ['del', 'f', 'no', 'sys']),
+        ('all', '--all-namespaces', ['g', 'd'], ['del', 'f', 'no']),
         ('sl', '--show-labels', ['g'], ['oyaml', 'ojson'], None),
         ('w', '--watch', ['g'], ['oyaml', 'ojson', 'owide']),
     ]
@@ -68,10 +69,10 @@ def main():
     # these accept a value, so they need to be at the end and
     # mutually exclusive within each other.
     positional_args = [
-        ('f', '-f', ['g', 'd', 'del'],
-        res_types + ['all', 'l', 'sys']),
-        ('l', '-l', ['g', 'd', 'del'], ['f','all']),
-        ('n', '--namespace', ['g', 'd', 'del', 'lo', 'ex', 'pf'], ['ns', 'no', 'sys', 'all'])
+        ('f', '-f', ['g', 'd', 'del', 'c'],
+        res_types + ['all', 'l']),
+        ('l', '-l', ['g', 'd', 'del'], ['f', 'all']),
+        ('n', '--namespace', ['g', 'd', 'del', 'lo', 'ex', 'pf'], ['ns', 'no', 'all'])
     ]
 
     # [(part, optional, take_exactly_one)]
