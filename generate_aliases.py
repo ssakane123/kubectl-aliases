@@ -30,52 +30,49 @@ def main():
     # (alias, full, allow_when_oneof, incompatible_with)
     cmds = [('k', 'kubectl', None, None)]
 
-    globs = [('sys', '--namespace=kube-system', None, None)]
+    globs = []
 
     ops = [
-        ('a', 'apply --recursive -f', None, None),
-        ('ak', 'apply -k', None, ['sys']),
-        ('k', 'kustomize', None, ['sys']),
-        ('ex', 'exec -i -t', None, None),
-        ('lo', 'logs -f', None, None),
-        ('lop', 'logs -f -p', None, None),
-        ('p', 'proxy', None, ['sys']),
-        ('pf', 'port-forward', None, ['sys']),
+        ('a', 'apply', None, None),
+        ('k', 'kustomize', None, None),
+        ('ex', 'exec', None, None),
+        ('lo', 'logs', None, None),
         ('g', 'get', None, None),
         ('d', 'describe', None, None),
-        ('rm', 'delete', None, None),
-        ('run', 'run --rm --restart=Never --image-pull-policy=IfNotPresent -i -t', None, None),
-        ]
+        ('del', 'delete', None, None),
+        ('run', 'run', None, None),
+    ]
 
     res = [
-        ('po', 'pods', ['g', 'd', 'rm'], None),
-        ('dep', 'deployment', ['g', 'd', 'rm'], None),
-        ('sts', 'statefulset', ['g', 'd', 'rm'], None),
-        ('svc', 'service', ['g', 'd', 'rm'], None),
-        ('ing', 'ingress', ['g', 'd', 'rm'], None),
-        ('cm', 'configmap', ['g', 'd', 'rm'], None),
-        ('sec', 'secret', ['g', 'd', 'rm'], None),
+        ('po', 'pods', ['g', 'd', 'del'], None),
+        ('dep', 'deployment', ['g', 'd', 'del'], None),
+        ('ds', 'daemonset', ['g', 'd', 'del'], None),
+        ('svc', 'service', ['g', 'd', 'del'], None),
+        ('ing', 'ingress', ['g', 'd', 'del'], None),
+        ('cm', 'configmap', ['g', 'd', 'del'], None),
+        ('sec', 'secret', ['g', 'd', 'del'], None),
         ('no', 'nodes', ['g', 'd'], ['sys']),
-        ('ns', 'namespaces', ['g', 'd', 'rm'], ['sys']),
-        ]
+        ('ns', 'namespaces', ['g', 'd', 'del'], ['sys']),
+    ]
     res_types = [r[0] for r in res]
 
     args = [
         ('oyaml', '-o=yaml', ['g'], ['owide', 'ojson', 'sl']),
         ('owide', '-o=wide', ['g'], ['oyaml', 'ojson']),
         ('ojson', '-o=json', ['g'], ['owide', 'oyaml', 'sl']),
-        ('all', '--all-namespaces', ['g', 'd'], ['rm', 'f', 'no', 'sys']),
+        ('all', '--all-namespaces', ['g', 'd'], ['del', 'f', 'no', 'sys']),
         ('sl', '--show-labels', ['g'], ['oyaml', 'ojson'], None),
-        ('all', '--all', ['rm'], None), # caution: reusing the alias
         ('w', '--watch', ['g'], ['oyaml', 'ojson', 'owide']),
-        ]
+    ]
 
     # these accept a value, so they need to be at the end and
     # mutually exclusive within each other.
-    positional_args = [('f', '--recursive -f', ['g', 'd', 'rm'], res_types + ['all'
-                       , 'l', 'sys']), ('l', '-l', ['g', 'd', 'rm'], ['f',
-                       'all']), ('n', '--namespace', ['g', 'd', 'rm',
-                       'lo', 'ex', 'pf'], ['ns', 'no', 'sys', 'all'])]
+    positional_args = [
+        ('f', '-f', ['g', 'd', 'del'],
+        res_types + ['all', 'l', 'sys']),
+        ('l', '-l', ['g', 'd', 'del'], ['f','all']),
+        ('n', '--namespace', ['g', 'd', 'del', 'lo', 'ex', 'pf'], ['ns', 'no', 'sys', 'all'])
+    ]
 
     # [(part, optional, take_exactly_one)]
     parts = [
