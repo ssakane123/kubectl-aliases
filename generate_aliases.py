@@ -54,6 +54,7 @@ def main():
         ('sec', 'secret', ['g', 'd', 'del', 'c'], None),
         ('no', 'nodes', ['g', 'd'], None),
         ('ns', 'namespaces', ['g', 'd', 'del', 'c'], None),
+        ('sa', 'serviceaccounts', ['g', 'd', 'del', 'c'], None),
     ]
     res_types = [r[0] for r in res]
 
