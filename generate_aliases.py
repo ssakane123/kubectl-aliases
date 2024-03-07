@@ -55,6 +55,7 @@ def main():
         ('no', 'nodes', ['g', 'd'], None),
         ('ns', 'namespace', ['g', 'd', 'del', 'c'], None),
         ('sa', 'serviceaccount', ['g', 'd', 'del', 'c'], None),
+        ('rs', 'replicaset', ['g', 'd', 'del', 'c'], None),
     ]
     res_types = [r[0] for r in res]
 
