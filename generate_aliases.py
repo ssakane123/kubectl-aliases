@@ -56,6 +56,8 @@ def main():
         ('ns', 'namespace', ['g', 'd', 'del', 'c'], None),
         ('sa', 'serviceaccount', ['g', 'd', 'del', 'c'], None),
         ('rs', 'replicaset', ['g', 'd', 'del', 'c'], None),
+        ('jo', 'job', ['g', 'd', 'del', 'c'], None),
+        ('cj', 'cronjob', ['g', 'd', 'del', 'c'], None),
     ]
     res_types = [r[0] for r in res]
 
@@ -68,6 +70,8 @@ def main():
         ('w', '--watch', ['g'], ['oyaml', 'ojson', 'owide']),
         ('drc', '--dry-run=client', ['a', 'c', 'run'], ['owide', 'all', 'sl', 'w', 'drs']),
         ('drs', '--dry-run=server', ['a', 'c', 'run'], ['owide', 'all', 'sl', 'w', 'drc']),
+        ('i', '-i', ['ex'], None),
+        ('t', '-t', ['ex'], None),
     ]
 
     # these accept a value, so they need to be at the end and
